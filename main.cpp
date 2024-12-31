@@ -1,5 +1,6 @@
 #include "grid.h"
 #include "time_integrator.h"
+#include "update_strategy.h"
 #include <cmath>
 #include <iostream>
 
@@ -23,18 +24,24 @@ int main() {
 
     Grid grid(NX, DX);
 
-    // Initialize grid with the initial condition: sin(2πx)
+    // Initialize grid with the initial condition: sin(πx)
     grid.initialize([](double x) {
         return std::sin(M_PI * x);
     });
 
     grid.apply_boundary_conditions();
 
-    // Create the diffusion equation
-    DiffusionEquation diffusion_eq;
+    // Create the update strategies
+    auto explicit_strategy = std::make_shared<ExplicitUpdate>();
+    auto implicit_strategy = std::make_shared<ImplicitUpdate>();
 
-    // Time integrator
-    TimeIntegrator integrator(grid, std::make_shared<DiffusionEquation>(diffusion_eq));
+    // Create the equation and set the strategy
+    auto equation = std::make_shared<DiffusionEquation>(explicit_strategy);
+
+    // Change the strategy to implicit
+    // equation->set_strategy(implicit_strategy);
+
+    TimeIntegrator integrator(grid, equation);
 
     // Run the simulation
     integrator.run(MAX_TIME, DT, D);

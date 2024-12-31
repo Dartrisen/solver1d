@@ -1,7 +1,7 @@
 #include "time_integrator.h"
 
 TimeIntegrator::TimeIntegrator(Grid& grid_, std::shared_ptr<Equation> eq)
-    : grid(grid_), equation(eq) {}
+    : grid(grid_), equation(std::move(eq)) {}
 
 void TimeIntegrator::step(double dt, double D) {
     equation->update(grid.field, dt, grid.dx, D);

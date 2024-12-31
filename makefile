@@ -1,6 +1,6 @@
 CXX = clang++
 CXXFLAGS = -std=c++17 -Wall -Wextra -O2
-SRC = main.cpp src/time_integrator.cpp src/equation.cpp src/grid.cpp
+SRC = main.cpp src/time_integrator.cpp src/equation.cpp src/grid.cpp src/update_strategy.cpp
 INCLUDE = -Iinclude
 OBJS = $(SRC:src/%.cpp=build/%.o)
 TARGET = main
