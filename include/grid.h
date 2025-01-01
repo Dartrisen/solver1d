@@ -6,6 +6,7 @@
 #include <functional>
 
 typedef std::vector<double> Field;
+typedef std::function<double(double)> Function;
 
 class Grid {
 public:
@@ -15,9 +16,8 @@ public:
 
     Grid(int nx_, double dx_);
 
-    void initialize(std::function<double(double)> init_func);
+    void initialize(Function init_func);
     void apply_boundary_conditions();
-    void apply_boundary_conditions_periodic();
     void print_field();
 };
 
